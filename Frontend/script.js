@@ -1,8 +1,9 @@
-const apiUrl = "http://localhost:3000/teas"; // Change this if deployed
+const apiUrl = "https://your-backend-url.onrender.com/teas";
+// Change this if deployed
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchTeas(); // Load teas on page load
-}); 
+});
 
 // Fetch and display all teas
 async function fetchTeas() {
@@ -59,7 +60,6 @@ function displayTea(tea) {
             class="btn btn-danger btn-sm">🗑️ Delete</button>
     </td>
 `;
-
 
   teaList.appendChild(row);
 }
