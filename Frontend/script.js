@@ -1,4 +1,4 @@
-const apiUrl = "https://your-backend-url.onrender.com/teas";
+const apiUrl = "https://crud-backend-ei8i.onrender.com/teas";
 // Change this if deployed
 
 document.addEventListener("DOMContentLoaded", () => {
