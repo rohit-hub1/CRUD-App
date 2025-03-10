@@ -60,6 +60,16 @@
             return;
           }
 
+          if (phone.length < 10 || phone.length > 15) {
+            alert("Phone number must be between 10 and 15 digits.");
+            return;
+          }
+
+          if (password.length < 6) {
+            alert("Password must be at least 6 characters long.");
+            return;
+          }
+
           try {
             const response = await fetch(
               "https://crud-backend-ei8i.onrender.com/auth/signup",

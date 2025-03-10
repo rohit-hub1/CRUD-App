@@ -12,7 +12,7 @@
 
             // ✅ If user is already logged in, redirect to dashboard
             if (token) {
-                window.location.href = "dashboard.html";
+                window.location.href = "index.html";
             }
         });
     </script>
@@ -36,34 +36,43 @@
 
     <script>
         document.getElementById("login-btn").addEventListener("click", async () => {
-  const phone = document.getElementById("phone").value;
-  const password = document.getElementById("password").value;
+            const phone = document.getElementById("phone").value;
+            const password = document.getElementById("password").value;
 
-  if (!phone || !password) {
-    alert("Please enter both phone number and password.");
-    return;
-  }
+            if (!phone || !password) {
+                alert("Please enter both phone number and password.");
+                return;
+            }
 
-  try {
-    const response = await fetch("https://crud-backend-ei8i.onrender.com/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone, password }),
-    });
+            if (phone.length < 10 || phone.length > 15) {
+                alert("Phone number must be between 10 and 15 digits.");
+                return;
+            }
 
-    const data = await response.json();
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return;
+            }
 
-    if (response.ok) {
-      localStorage.setItem("token", data.token); // Store token
-      window.location.href = "index.html"; // Redirect to main app
-    } else {
-      alert(data.message || "Login failed");
-    }
-  } catch (error) {
-    alert("Something went wrong. Please try again.");
-  }
-});
+            try {
+                const response = await fetch("https://crud-backend-ei8i.onrender.com/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ phone, password }),
+                });
 
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem("token", data.token); // Store token
+                    window.location.href = "index.html"; // Redirect to main app
+                } else {
+                    alert(data.message || "Login failed");
+                }
+            } catch (error) {
+                alert("Something went wrong. Please try again.");
+            }
+        });
     </script>
 </body>
 </html>

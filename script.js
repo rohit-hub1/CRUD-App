@@ -1,72 +1,72 @@
 const apiUrl = "https://crud-backend-ei8i.onrender.com/teas";
 
-// ✅ Fetch and Display Teas (Only for Logged-in User)
-async function fetchTeas() {
-  const token = localStorage.getItem("token"); // Get token from localStorage
+// ✅ Reusable API Call Function
+async function makeApiCall(url, method, body = null) {
+  const token = localStorage.getItem("token");
   if (!token) {
     alert("Please log in first!");
     window.location.href = "login.html";
     return;
   }
 
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+
   try {
-    const response = await fetch(apiUrl, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Include "Bearer"
-      },
+    const response = await fetch(url, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null,
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch teas");
+      if (response.status === 401) {
+        // Token expired or invalid
+        localStorage.removeItem("token");
+        alert("Session expired. Please log in again.");
+        window.location.href = "login.html";
+        return;
+      }
+      throw new Error(`API call failed: ${response.statusText}`);
     }
 
-    const teas = await response.json();
+    return await response.json();
+  } catch (error) {
+    console.error("API call error:", error);
+    alert("Something went wrong. Please try again.");
+    throw error;
+  }
+}
+
+// ✅ Fetch and Display Teas
+async function fetchTeas() {
+  try {
+    const teas = await makeApiCall(apiUrl, "GET");
     const teaList = document.getElementById("teaList");
     teaList.innerHTML = "";
 
     teas.forEach(displayTea);
   } catch (error) {
     console.error("Error fetching teas:", error);
-    alert("Session expired. Please log in again.");
-    localStorage.removeItem("token"); // Clear token on error
-    window.location.href = "login.html"; // Redirect to login
   }
 }
 
-// ✅ Add New Tea (User-Specific)
+// ✅ Add New Tea
 document.getElementById("teaForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const name = document.getElementById("name").value;
   const price = document.getElementById("price").value;
-  const token = localStorage.getItem("token");
 
   if (!name || !price) {
     alert("Please enter both name and price.");
     return;
   }
 
-  if (!token) {
-    alert("Unauthorized! Please log in.");
-    window.location.href = "login.html";
-    return;
-  }
-
   try {
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ name, price }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to add tea");
-    }
-
-    const newTea = await response.json();
+    const newTea = await makeApiCall(apiUrl, "POST", { name, price });
     displayTea(newTea);
     document.getElementById("teaForm").reset();
   } catch (error) {
@@ -91,24 +91,12 @@ function displayTea(tea) {
   teaList.appendChild(row);
 }
 
-// ✅ Delete Tea (Only User's Own)
+// ✅ Delete Tea
 async function deleteTea(_id) {
   if (!confirm("Are you sure you want to delete this tea?")) return;
 
-  const token = localStorage.getItem("token");
-
   try {
-    const response = await fetch(`${apiUrl}/${_id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to delete tea");
-    }
-
+    await makeApiCall(`${apiUrl}/${_id}`, "DELETE");
     document.getElementById(`tea-${_id}`).remove();
   } catch (error) {
     console.error("Error deleting tea:", error);
@@ -122,9 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logout-btn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("token"); // Remove token from localStorage
-      alert("You have been logged out.");
-      window.location.href = "login.html"; // Redirect to login page
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.removeItem("token");
+        alert("You have been logged out.");
+        window.location.href = "login.html";
+      }
     });
   }
 });
