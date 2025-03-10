@@ -105,9 +105,19 @@ async function deleteTea(_id) {
   }
 }
 
+// ✅ LOGOUT FUNCTION
+document.addEventListener("DOMContentLoaded", () => {
+  fetchTeas(); // Load teas when page loads
+
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("token"); // Remove token from localStorage
+      window.location.href = "login.html"; // Redirect to login page
+    });
+  }
+});
+
 // Ensure functions are accessible in HTML
 window.fetchTeas = fetchTeas;
 window.deleteTea = deleteTea;
-
-// Load teas when the page loads
-document.addEventListener("DOMContentLoaded", fetchTeas);
