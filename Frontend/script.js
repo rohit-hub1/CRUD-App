@@ -1,5 +1,10 @@
 const apiUrl = "https://crud-backend-ei8i.onrender.com/teas";
-// Change this if deployed
+const token = localStorage.getItem("token");
+
+// ✅ Redirect to login if not authenticated
+if (!token) {
+  window.location.href = "login.html";
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchTeas(); // Load teas on page load
@@ -8,7 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
 // Fetch and display all teas
 async function fetchTeas() {
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, {
+      headers: { Authorization: `Bearer ${token}` }, // Send token for authentication
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch teas. Please log in again.");
+    }
+
     const teas = await response.json();
     const teaList = document.getElementById("teaList");
     teaList.innerHTML = ""; // Clear existing table
@@ -16,6 +28,8 @@ async function fetchTeas() {
     teas.forEach(displayTea); // Add each tea to the table
   } catch (error) {
     console.error("Error fetching teas:", error);
+    alert(error.message);
+    window.location.href = "login.html"; // Redirect if unauthorized
   }
 }
 
@@ -23,26 +37,34 @@ async function fetchTeas() {
 document.getElementById("teaForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const price = document.getElementById("price").value;
+  const name = document.getElementById("name").value.trim();
+  const price = document.getElementById("price").value.trim();
 
   if (!name || !price) {
-    alert("Please enter both name and price.");
+    alert("⚠ Please enter both name and price.");
     return;
   }
 
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Send token
+      },
       body: JSON.stringify({ name, price }),
     });
+
+    if (!response.ok) {
+      throw new Error("Failed to add tea. Try again.");
+    }
 
     const newTea = await response.json();
     displayTea(newTea); // Add tea to table without refreshing
     document.getElementById("teaForm").reset(); // Clear form
   } catch (error) {
     console.error("Error adding tea:", error);
+    alert(error.message);
   }
 });
 
@@ -59,7 +81,7 @@ function displayTea(tea) {
         <button onclick="deleteTea('${tea._id}')" 
             class="btn btn-danger btn-sm">🗑️ Delete</button>
     </td>
-`;
+  `;
 
   teaList.appendChild(row);
 }
@@ -71,16 +93,19 @@ async function deleteTea(_id) {
   try {
     const response = await fetch(`${apiUrl}/${_id}`, {
       method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` }, // Send token
     });
 
-    if (response.ok) {
-      // Remove the tea from the UI without reloading
-      document.getElementById(`tea-${_id}`).remove();
-    } else {
-      console.error("Failed to delete tea");
+    if (!response.ok) {
+      throw new Error("Failed to delete tea.");
     }
+
+    // Remove the tea from the UI without reloading
+    document.getElementById(`tea-${_id}`).remove();
   } catch (error) {
     console.error("Error deleting tea:", error);
+    alert(error.message);
   }
 }
+
 window.deleteTea = deleteTea; // Make the function accessible in HTML

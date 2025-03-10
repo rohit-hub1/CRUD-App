@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem("token");
+
+            // ✅ If user is already logged in, redirect to dashboard
+            if (token) {
+                window.location.href = "dashboard.html";
+            }
+        });
+    </script>
 </head>
 <body class="flex items-center justify-center h-screen bg-gray-100">
     <div class="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -25,43 +36,44 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-    const loginBtn = document.getElementById("login-btn");
+            const loginBtn = document.getElementById("login-btn");
 
-    if (!loginBtn) {
-        console.error("❌ Login button not found!");
-        return;
-    }
-
-    loginBtn.addEventListener("click", async function () {
-        const phone = document.getElementById("phone").value;
-        const password = document.getElementById("password").value;
-
-        if (!phone || !password) {
-            alert("Please enter both phone number and password.");
-            return;
-        }
-
-        try {
-            const response = await fetch("https://crud-backend-ei8i.onrender.com/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ phone, password }),
-            });
-
-            const data = await response.json();
-            
-            if (response.ok) {
-                alert(data.message); // Login success message
-                window.location.href = "dashboard.html"; // Redirect to dashboard
-            } else {
-                alert(data.message || "Login failed"); // Show actual error message
+            if (!loginBtn) {
+                console.error("❌ Login button not found!");
+                return;
             }
-        } catch (error) {
-            alert("Something went wrong. Please try again later.");
-        }
-    });
-});
 
+            loginBtn.addEventListener("click", async function () {
+                const phone = document.getElementById("phone").value.trim();
+                const password = document.getElementById("password").value.trim();
+
+                if (!phone || !password) {
+                    alert("⚠ Please enter both phone number and password.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch("https://crud-backend-ei8i.onrender.com/auth/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ phone, password }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // ✅ Save token & redirect
+                        localStorage.setItem("token", data.token);
+                        alert("✅ Login successful! Redirecting...");
+                        window.location.href = "dashboard.html";
+                    } else {
+                        alert("❌ " + (data.message || "Login failed. Try again."));
+                    }
+                } catch (error) {
+                    alert("❌ Something went wrong. Please try again later.");
+                }
+            });
+        });
     </script>
 </body>
 </html>
