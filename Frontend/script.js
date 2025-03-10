@@ -1,32 +1,28 @@
 const apiUrl = "https://crud-backend-ei8i.onrender.com/teas";
-const loginBtn = document.getElementById("login-btn");
 const logoutBtn = document.getElementById("logout-btn");
 
-// Check authentication status
-document.addEventListener("DOMContentLoaded", function () {
-  const token = localStorage.getItem("authToken");
-
-  if (token) {
-    logoutBtn.classList.remove("hidden");
-    loginBtn.classList.add("hidden");
-  } else {
-    loginBtn.classList.remove("hidden");
-    logoutBtn.classList.add("hidden");
-  }
-
-  loginBtn.addEventListener("click", () => {
-    window.location.href = "login.html";
-  });
-
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("authToken");
-    window.location.href = "login.html";
-  });
-
+document.addEventListener("DOMContentLoaded", () => {
+  checkAuth();
   fetchTeas();
 });
 
-// Fetch and display all teas
+// ✅ Check if user is logged in
+function checkAuth() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html"; // Redirect to login if not logged in
+  } else {
+    logoutBtn.classList.remove("d-none"); // Show logout button
+  }
+}
+
+// ✅ Logout functionality
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("token"); // Remove token
+  window.location.href = "login.html"; // Redirect to login page
+});
+
+// ✅ Fetch and display all teas
 async function fetchTeas() {
   try {
     const response = await fetch(apiUrl);
@@ -40,7 +36,7 @@ async function fetchTeas() {
   }
 }
 
-// Add new tea
+// ✅ Add new tea
 document.getElementById("teaForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -67,7 +63,7 @@ document.getElementById("teaForm").addEventListener("submit", async (event) => {
   }
 });
 
-// Function to display a tea in the table
+// ✅ Function to display a tea in the table
 function displayTea(tea) {
   const teaList = document.getElementById("teaList");
   const row = document.createElement("tr");
@@ -84,12 +80,14 @@ function displayTea(tea) {
   teaList.appendChild(row);
 }
 
-// Delete tea
+// ✅ Delete tea from frontend and backend
 async function deleteTea(_id) {
   if (!confirm("Are you sure you want to delete this tea?")) return;
 
   try {
-    const response = await fetch(`${apiUrl}/${_id}`, { method: "DELETE" });
+    const response = await fetch(`${apiUrl}/${_id}`, {
+      method: "DELETE",
+    });
 
     if (response.ok) {
       document.getElementById(`tea-${_id}`).remove();
@@ -101,4 +99,4 @@ async function deleteTea(_id) {
   }
 }
 
-window.deleteTea = deleteTea; // Make function accessible in HTML
+window.deleteTea = deleteTea;
