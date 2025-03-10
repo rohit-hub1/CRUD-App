@@ -1,6 +1,6 @@
 const apiUrl = "https://crud-backend-ei8i.onrender.com/teas";
 
-// Fetch and display teas for the logged-in user
+// ✅ Fetch and Display Teas (Only for Logged-in User)
 async function fetchTeas() {
   const token = localStorage.getItem("token"); // Get token from localStorage
   if (!token) {
@@ -12,11 +12,13 @@ async function fetchTeas() {
   try {
     const response = await fetch(apiUrl, {
       headers: {
-        Authorization: `Bearer ${token}`, // Send token in request
+        Authorization: `Bearer ${token}`, // Include "Bearer"
       },
     });
 
-    if (!response.ok) throw new Error("Failed to fetch teas");
+    if (!response.ok) {
+      throw new Error("Failed to fetch teas");
+    }
 
     const teas = await response.json();
     const teaList = document.getElementById("teaList");
@@ -25,10 +27,13 @@ async function fetchTeas() {
     teas.forEach(displayTea);
   } catch (error) {
     console.error("Error fetching teas:", error);
+    alert("Session expired. Please log in again.");
+    localStorage.removeItem("token"); // Clear token on error
+    window.location.href = "login.html"; // Redirect to login
   }
 }
 
-// Add new tea (user-specific)
+// ✅ Add New Tea (User-Specific)
 document.getElementById("teaForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -43,6 +48,7 @@ document.getElementById("teaForm").addEventListener("submit", async (event) => {
 
   if (!token) {
     alert("Unauthorized! Please log in.");
+    window.location.href = "login.html";
     return;
   }
 
@@ -56,7 +62,9 @@ document.getElementById("teaForm").addEventListener("submit", async (event) => {
       body: JSON.stringify({ name, price }),
     });
 
-    if (!response.ok) throw new Error("Failed to add tea");
+    if (!response.ok) {
+      throw new Error("Failed to add tea");
+    }
 
     const newTea = await response.json();
     displayTea(newTea);
@@ -66,7 +74,7 @@ document.getElementById("teaForm").addEventListener("submit", async (event) => {
   }
 });
 
-// Function to display a tea
+// ✅ Display a Tea in the Table
 function displayTea(tea) {
   const teaList = document.getElementById("teaList");
   const row = document.createElement("tr");
@@ -83,7 +91,7 @@ function displayTea(tea) {
   teaList.appendChild(row);
 }
 
-// Delete tea
+// ✅ Delete Tea (Only User's Own)
 async function deleteTea(_id) {
   if (!confirm("Are you sure you want to delete this tea?")) return;
 
@@ -97,7 +105,9 @@ async function deleteTea(_id) {
       },
     });
 
-    if (!response.ok) throw new Error("Failed to delete tea");
+    if (!response.ok) {
+      throw new Error("Failed to delete tea");
+    }
 
     document.getElementById(`tea-${_id}`).remove();
   } catch (error) {
@@ -105,7 +115,7 @@ async function deleteTea(_id) {
   }
 }
 
-// ✅ LOGOUT FUNCTION
+// ✅ Logout Functionality
 document.addEventListener("DOMContentLoaded", () => {
   fetchTeas(); // Load teas when page loads
 
@@ -113,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("token"); // Remove token from localStorage
+      alert("You have been logged out.");
       window.location.href = "login.html"; // Redirect to login page
     });
   }
