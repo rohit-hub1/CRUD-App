@@ -1,5 +1,55 @@
 const apiUrl = "https://crud-backend-ei8i.onrender.com/teas";
 
+
+
+// ✅ Fetch User ID and Display Below Logout Button
+async function fetchUserId() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please log in first!");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+    const response = await fetch(`${apiUrl}/user-info`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Failed to fetch user info");
+
+    const userData = await response.json();
+    const userIdElement = document.getElementById("user-id");
+    if (userData.userId) {
+      userIdElement.textContent = `User ID: ${userData.userId}`;
+    }
+  } catch (error) {
+    console.error("Error fetching user ID:", error);
+  }
+}
+
+// ✅ Load User ID when page loads
+document.addEventListener("DOMContentLoaded", () => {
+  fetchTeas();
+  fetchUserId();
+
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    });
+  }
+});
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 // ✅ Reusable API Call Function
 async function makeApiCall(url, method, body = null) {
   const token = localStorage.getItem("token");
