@@ -4,10 +4,13 @@ body {
     text-align: center;
 }
 
-body {
+.header-section {
   background-image: url('bg2.avif'); /* Path to your image */
-  background-size: cover; /* Makes the image cover the entire background */
+  background-size: cover; /* Makes the image cover the entire section */
   background-position: center; /* Centers the image */
+  padding: 20px; /* Add some padding */
+  border-radius: 10px; /* Rounded corners */
+  margin-bottom: 20px; /* Add some margin below the section */
 }
 
 h1 {
