@@ -1,3 +1,9 @@
+@media (max-width: 768px) {
+  body {
+    background-size: contain; /* Adjust for smaller screens */
+  }
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -14,6 +20,13 @@ body {
   padding: 0; /* Remove default padding */
   font-family: Arial, sans-serif; /* Set a default font */
   color: #ffffff; /* Set text color to white (or any color that contrasts well with the background) */
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  padding: 20px; /* Add some padding */
+  border-radius: 10px; /* Rounded corners */
+  margin: 20px; /* Add some margin */
 }
 
 h1 {
