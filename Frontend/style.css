@@ -4,6 +4,17 @@ body {
     text-align: center;
 }
 
+body {
+    background-image: url('bgm.jpg'); /* Path to your image */
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center 30%; /* Adjust this value to shift the image upwards */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    height: 100vh; /* Full viewport height */
+}
+
 h1 {
     color: #333;
 }
