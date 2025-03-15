@@ -4,37 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Manager</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
-    <div class="background-container">
-        <div class="content">
-            <h1>Food Manager</h1>
-            
-            <!-- Add Dish Form -->
-            <h2>Add Dish</h2>
-            <form id="add-dish-form">
-                <input type="text" id="dish-name" placeholder="Dish Name" required>
-                <input type="number" id="dish-price" placeholder="Price" required>
-                <button type="submit">Add Dish</button>
-            </form>
+    <div class="container">
+        <h1>Food Manager</h1>
+        
+        <!-- Add Dish Form -->
+        <h2>Dish Name</h2>
+        <form id="add-dish-form">
+            <input type="text" id="dish-name" placeholder="Dish Name" required>
+            <input type="number" id="dish-price" placeholder="Price" required>
+            <button type="submit">Add Dish</button>
+        </form>
 
-            <!-- Dish Table -->
-            <h2>Dish List</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="dish-list">
-                    <!-- Rows will be added dynamically -->
-                </tbody>
-            </table>
-        </div>
+        <!-- Dish List Table -->
+        <h2>ID</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="dish-list">
+                <!-- Rows will be added dynamically -->
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -46,7 +43,6 @@
 
             const newRow = `
                 <tr>
-                    <td>${document.querySelectorAll('#dish-list tr').length + 1}</td>
                     <td>${dishName}</td>
                     <td>${dishPrice}</td>
                     <td><button onclick="deleteDish(this)">Delete</button></td>

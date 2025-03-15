@@ -3,49 +3,73 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: Arial, sans-serif; /* Adjust font as needed */
+    font-family: Arial, sans-serif;
     background-color: #f4f4f4; /* Fallback background color */
 }
 
-/* Container for the background image */
-.background-container {
+/* Background image adjustment */
+body {
     background-image: url('bg.jpg'); /* Path to your image */
     background-size: cover; /* Ensures the image covers the entire container */
     background-position: center 20%; /* Adjust the second value to shift the image upwards */
     background-repeat: no-repeat; /* Prevents the image from repeating */
-    min-height: 100vh; /* Full viewport height */
-    width: 100%; /* Full width */
-    position: relative; /* For positioning child elements if needed */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     padding: 20px;
     box-sizing: border-box;
 }
 
-/* Main content container */
-.content {
+/* Container for the content */
+.container {
     background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 100%;
-    text-align: center;
+    max-width: 600px;
+    margin: 0 auto; /* Center the container */
 }
 
 /* Heading styles */
-h1 {
-    font-size: 2.5rem;
+h1, h2 {
     color: #333;
-    margin-bottom: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
 h2 {
-    font-size: 2rem;
-    color: #555;
-    margin-bottom: 15px;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* Form styles */
+form {
+    margin-bottom: 20px;
+}
+
+form input[type="text"], form input[type="number"] {
+    width: calc(100% - 22px); /* Full width minus padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
 }
 
 /* Table styles */
@@ -66,51 +90,41 @@ table th {
     font-weight: bold;
 }
 
-/* Button styles */
-button {
-    background-color: #007bff;
+/* Delete button in table */
+table button {
+    background-color: #dc3545;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 5px 10px;
+    border-radius: 3px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Form input styles */
-input[type="text"], input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
+table button:hover {
+    background-color: #c82333;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .background-container {
+    body {
         background-position: center 30%; /* Adjust for smaller screens */
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
 
     table th, table td {
         padding: 8px;
     }
 
-    button {
+    form button, table button {
         padding: 8px 16px;
         font-size: 0.9rem;
     }
