@@ -1,76 +1,103 @@
-@media (max-width: 768px) {
-  body {
-    background-size: contain; /* Adjust for smaller screens */
-  }
-}
-
+/* Body and Background */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
+  background-image: url('bg.jpg');
+  background-size: cover;
+  background-position: top center; /* Focus on the model's face */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
 }
 
-body {
-  background-image: url('bg.jpg'); /* Path to your image */
-  background-size: cover; /* Makes the image cover the entire background */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  background-attachment: fixed; /* Keeps the image fixed while scrolling */
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  font-family: Arial, sans-serif; /* Set a default font */
-  color: #ffffff; /* Set text color to white (or any color that contrasts well with the background) */
+/* Full Overlay */
+.full-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Light overlay to make the face visible */
+  z-index: -1;
 }
 
-.overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-  padding: 20px; /* Add some padding */
-  border-radius: 10px; /* Rounded corners */
-  margin: 20px; /* Add some margin */
+/* Content Styling */
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  text-align: center;
 }
 
 h1 {
-    color: #333;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
 }
 
+/* Form Styling */
 form {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 input, button {
-    padding: 10px;
-    margin: 5px;
-    border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+}
+
+input {
+  width: 200px;
 }
 
 button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
+  background-color: #007bff; /* Blue button */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #218838;
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
+/* Table Styling */
 table {
-    width: 50%;
-    margin: auto;
-    border-collapse: collapse;
-    background: white;
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
 th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Light border between rows */
 }
 
 th {
-    background-color: #007bff;
-    color: white;
+  background-color: #007bff; /* Blue header background */
+  color: white;
 }
 
 tr:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1; /* Light gray hover effect */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+    font-size: 14px; /* Smaller font size for mobile */
+  }
+
+  input {
+    width: 100%; /* Full-width inputs on mobile */
+  }
 }

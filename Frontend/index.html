@@ -14,65 +14,58 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div class="overlay">
-<div class="container my-5">
-      <!-- ✅ Logout Button -->
-      <div class="d-flex justify-content-end">
-        <button id="logout-btn" class="btn btn-danger">Logout</button>
-        <p id="user-id" class="text-center mt-2"></p>
+    <div class="full-overlay"></div>
+    <div class="content">
+      <div class="container my-5">
+        <!-- ✅ Logout Button -->
+        <div class="d-flex justify-content-end">
+          <button id="logout-btn" class="btn btn-danger">Logout</button>
+          <p id="user-id" class="text-center mt-2"></p>
+        </div>
 
-      </div>
+        <h1 class="text-center text-3xl font-bold text-blue-600 mb-4">
+          Food Manager
+        </h1>
 
-      <h1 class="text-center text-3xl font-bold text-blue-600 mb-4">
-        Food Manager
-      </h1>
-
-      <form
-        id="teaForm"
-        class="p-4 shadow-lg rounded-lg bg-white max-w-lg mx-auto"
-      >
-        <input
-          type="text"
-          id="name"
-          placeholder="Dish Name"
-          class="form-control mb-3 border border-gray-300 rounded-lg p-2"
-        />
-        <input
-          type="number"
-          id="price"
-          placeholder="Price"
-          class="form-control mb-3 border border-gray-300 rounded-lg p-2"
-        />
-        <button
-          type="submit"
-          class="btn btn-success w-100 py-2 text-lg font-bold"
+        <form
+          id="teaForm"
+          class="p-4 shadow-lg rounded-lg bg-white max-w-lg mx-auto"
         >
-          Add Dish
-        </button>
-      </form>
+          <input
+            type="text"
+            id="name"
+            placeholder="Dish Name"
+            class="form-control mb-3 border border-gray-300 rounded-lg p-2"
+          />
+          <input
+            type="number"
+            id="price"
+            placeholder="Price"
+            class="form-control mb-3 border border-gray-300 rounded-lg p-2"
+          />
+          <button
+            type="submit"
+            class="btn btn-success w-100 py-2 text-lg font-bold"
+          >
+            Add Dish
+          </button>
+        </form>
 
-      <table
-        class="table table-striped table-bordered mt-4 bg-white shadow-lg"
-      >
-        <thead class="bg-blue-500 text-white">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="teaList">
-          <!-- Teas will be added here dynamically -->
-        </tbody>
-      </table>
+        <table class="table table-striped table-bordered mt-4 bg-white shadow-lg">
+          <thead class="bg-blue-500 text-white">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="teaList">
+            <!-- Teas will be added here dynamically -->
+          </tbody>
+        </table>
+      </div>
     </div>
-    </div>
-
-    
-
-    
-    
 
     <script type="module" src="script.js"></script>
   </body>
