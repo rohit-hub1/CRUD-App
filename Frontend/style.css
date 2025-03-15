@@ -4,13 +4,16 @@ body {
     text-align: center;
 }
 
-.header-section {
-  background-image: url('bg.jpg'); /* Path to your image */
-  background-size: cover; /* Makes the image cover the entire section */
+body {
+  background-image: url('images/background.jpg'); /* Path to your image */
+  background-size: cover; /* Makes the image cover the entire background */
   background-position: center; /* Centers the image */
-  padding: 20px; /* Add some padding */
-  border-radius: 10px; /* Rounded corners */
-  margin-bottom: 20px; /* Add some margin below the section */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-attachment: fixed; /* Keeps the image fixed while scrolling */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  font-family: Arial, sans-serif; /* Set a default font */
+  color: #ffffff; /* Set text color to white (or any color that contrasts well with the background) */
 }
 
 h1 {
