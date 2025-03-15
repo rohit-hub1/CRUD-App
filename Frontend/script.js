@@ -1,5 +1,7 @@
 const apiUrl = "https://crud-backend-ei8i.onrender.com/teas";
 
+
+
 // ✅ Fetch User ID and Display Below Logout Button
 async function fetchUserId() {
   const token = localStorage.getItem("token");
@@ -42,6 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // ✅ Reusable API Call Function
 async function makeApiCall(url, method, body = null) {
@@ -145,6 +152,22 @@ async function deleteTea(_id) {
     console.error("Error deleting tea:", error);
   }
 }
+
+// ✅ Logout Functionality
+document.addEventListener("DOMContentLoaded", () => {
+  fetchTeas(); // Load teas when page loads
+
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      if (confirm("Are you sure you want to log out?")) {
+        localStorage.removeItem("token");
+        alert("You have been logged out.");
+        window.location.href = "login.html";
+      }
+    });
+  }
+});
 
 // Ensure functions are accessible in HTML
 window.fetchTeas = fetchTeas;
