@@ -125,12 +125,12 @@ document.getElementById("teaForm").addEventListener("submit", async (event) => {
 });
 
 // ✅ Display a Tea in the Table
+// Function to display a tea (without ID)
 function displayTea(tea) {
   const teaList = document.getElementById("teaList");
   const row = document.createElement("tr");
   row.id = `tea-${tea._id}`;
   row.innerHTML = `
-    <td>${tea._id}</td>
     <td>${tea.name}</td>
     <td>₹${tea.price}</td>
     <td>
@@ -140,6 +140,7 @@ function displayTea(tea) {
 
   teaList.appendChild(row);
 }
+
 
 // ✅ Delete Tea
 async function deleteTea(_id) {
