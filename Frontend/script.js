@@ -132,7 +132,7 @@ function displayTea(tea) {
   row.id = `tea-${tea._id}`;
   row.innerHTML = `
     <td>${tea.name}</td>
-    <td>₹${tea.price}</td>
+    <td>$${tea.price}</td>  <!-- Changed ₹ to $ -->
     <td>
       <button onclick="deleteTea('${tea._id}')" class="btn btn-danger btn-sm">🗑️ Delete</button>
     </td>
